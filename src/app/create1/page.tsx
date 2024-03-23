@@ -1,19 +1,51 @@
 "use client"
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, useCallback } from 'react';
 import { insertRow, upload } from "../../utils/firebaseHelper";
 import { Aside } from '../../components/components';
 import { BackendAPI, handleOra } from '../../utils/backend';
-import { useAccount } from 'wagmi';
+import { useAccount, useConfig, useContractWrite } from 'wagmi';
+import AimeErc7007Abi from '../mint/aime-erc7007.abi.json';
 
 const Home: React.FC = () => {
-    const router = useRouter();
+    const config = useConfig();
+
     const [image, setImage] = useState<string | ArrayBuffer | null>(null); 
     const [nftName, setNftName] = useState("your own nft");
     const [promt, setPrompt] = useState("a girl with Batman body");
     const [isLoading, setIsLoading] = useState(false);
     const { address, isConnected } = useAccount();
     const [generatedImage, setGeneratedImage] =useState<any>("jpg.jpeg");
+
+    const {
+        writeAsync,
+    } = useContractWrite({
+        address: '0xCE16905BdD7fF8fBEA3695edaC80e1D48E2bE75f',
+        abi: AimeErc7007Abi,
+        functionName: 'mint',
+    })
+
+    const mintAime = useCallback(async (uri: string) => {
+        console.log({
+          address,
+          isConnected,
+        })
+        if(!isConnected) {
+          alert('Please connect your wallet');
+          return;
+        }
+        console.log({
+          config,
+          AimeErc7007Abi
+        })
+    
+        const { hash } = await writeAsync({
+          args: ['0x00', '0x00', uri, '0x00'],
+        });
+        console.log({
+          hash
+        })
+        // await writeContract();
+      }, [address, config, isConnected, writeAsync]);
 
     const handleImageUpload = async (tempfile: any) => {
         if (tempfile) {
@@ -54,9 +86,9 @@ const Home: React.FC = () => {
     }
 
     const handleNextButtonClick = async () => {
-        handleOra().then(() => {
-            alert("orararara")
-        })
+        const metadataUri = 'https://www.miladymaker.net/milady/json/2';
+        await mintAime(metadataUri);
+        handleOra();
     };
 
     return (

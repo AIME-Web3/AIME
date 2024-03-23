@@ -32,7 +32,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         if(isConnected) {
-            setImage("gggg");
+            setImage("isImage");
         }
     }, [isConnected]);
     return (
@@ -73,7 +73,11 @@ const Home: React.FC = () => {
                     )}
                     {image && !video && !audio && (
                         <>
-                            <textarea value={content} onChange={(e) => setContent(e.target.value)}/>
+                            <textarea
+                             value={content}
+                              onChange={(e) => setContent(e.target.value)}
+                              className="bg-[#1e1e1e] text-white w-full rounded-[20px] h-[194px] p-5 resize-none" 
+                              />
                             <small
                                 className="tracking-[0.2px] text-left w-full font-medium leading-6 text-base text-[#828282]"
                             >

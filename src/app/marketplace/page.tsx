@@ -4,9 +4,6 @@ import React, { useCallback } from 'react';
 import { useState, } from 'react';
 import { useAccount, useConfig, useContractWrite } from 'wagmi';
 import AimeErc7007Abi from '../mint/aime-erc7007.abi.json';
-// import { writeContract } from 'viem/actions'
-import { writeContract } from '@wagmi/core';
-import { wagmiConfig } from '../../utils/wagmi';
 
 const NavBtnStyleNonActive = `m-2 bg-transparent text-white py-2 px-4 border border-green-600 rounded-full hover:bg-gradient-to-r hover:from-green-600 hover:via-green-600 hover:to-green-800 hover:text-white `;
 const NavBtnStyleActive = `m-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-150 rounded-full hover:bg-green-600 hover:text-white `;
@@ -148,8 +145,11 @@ const MarketPlace: React.FC = () => {
               <div className="px-6 pt-4 pb-2 text-center">
                 
                 <button
-                onClick={() => mintAime(metadataUri)}
-                type="button" className="text-gray-900 bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:ring-green-200 dark:focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">MINT</button>
+                  onClick={() => mintAime(metadataUri)}
+                  type="button" className="text-gray-900 bg-gradient-to-r from-green-300 via-green-400 to-green-500 hover:bg-gradient-to-br focus:ring-4 focus:ring-green-200 dark:focus:ring-green-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                >
+                  MINT
+                </button>
 
               </div>
             </div>
