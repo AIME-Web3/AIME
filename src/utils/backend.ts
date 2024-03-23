@@ -42,21 +42,21 @@ const handleImage = (response: AxiosResponse) => {
   }
 
 export const BackendAPI = {
-  avatarWithPrompt: ({prompt, file}: any) => backendReq({
-    data: {prompt, file},
-    method: "POST",
-    endpoint: `generate_avatar_images`,
-    contentType: 'multipart/form-data',
-    responseType: 'arraybuffer'
-  }).then(handleImage),
-  generateAudio: ({content, gender}: any) => backendReq({
-    data: {content, gender},
-    method: "POST",
-    endpoint: `generate_audio`,
-    responseType: 'arraybuffer',
-  }).then(handleMedia),
-  generateAiAvatarVideo: ({username}: any) => backendReq({
-    endpoint: `generate_ai_avatar_video?username=${username}`,
-    responseType: 'arraybuffer',
-  }).then(handleVideo),
+    avatarWithPrompt: ({prompt, file}: any) => backendReq({
+        data: {prompt, file},
+        method: "POST",
+        endpoint: `generate_avatar_images`,
+        contentType: 'multipart/form-data',
+        responseType: 'arraybuffer'
+    }).then(handleImage),
+    generateAudio: ({content, gender}: any) => backendReq({
+        data: {content, gender},
+        method: "POST",
+        endpoint: `generate_audio`,
+        responseType: 'arraybuffer',
+    }).then(handleMedia),
+    generateAiAvatarVideo: ({username}: any) => backendReq({
+        endpoint: `generate_ai_avatar_video?username=${username}`,
+        responseType: 'arraybuffer',
+    }).then(handleVideo),
 }

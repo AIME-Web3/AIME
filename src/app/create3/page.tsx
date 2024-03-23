@@ -3,22 +3,23 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { insertRow, upload } from "@/utils/firebaseHelper";
 import { Aside } from '@/components/components';
-import { BackendAPI } from '@/utils/backend';
+// import { mintclub } from 'mint.club-v2-sdk';
 
 const Home: React.FC = () => {
     const router = useRouter();
     const [image, setImage] = useState<string | ArrayBuffer | null>(null); 
-    const [nftName, setNftName] = useState("your own nft");
-    const [promt, setPrompt] = useState("a girl with Batman body");
-    const [generatedImage, setGeneratedImage] =useState<File>();
+    const [nftName, setNftName] = useState("");
+    const [promt, setPrompt] = useState("");
+    
 
     const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const tempfile = event.target.files && event.target.files[0];
+        console.log(tempfile);
         if (tempfile) {
             // below test must be address, it is the name of the file
             // upload file to firebase
             const url_1 = await upload(`test`, tempfile);
-
+            
             // key will be address
             var key = "aaa"
             // upload file to firebase
@@ -35,14 +36,13 @@ const Home: React.FC = () => {
                 }
             };
             reader.readAsDataURL(tempfile);
-            
         }
-        };
+    };
 
 
     const handleNextButtonClick = async () => {
         
-        // router.push('/create2');
+        router.push('/create2');
         
     };
 
@@ -57,18 +57,11 @@ const Home: React.FC = () => {
                         </div>
                     )}
                     {!image && (
-                        <>
-                        <label htmlFor={`image`} className="flex items-center justify-center w-64 h-64 bg-gray-700 rounded-lg">
+                        <div className="flex items-center justify-center w-64 h-64 bg-gray-700 rounded-lg">
                             <i className="fas fa-image fa-3x text-gray-500"></i>
-                            <input
-                                id="image"
-                                type="file"
-                                className='w-0'
-                                onChange={handleImageUpload}
-                            />
-                        </label>
-                        </>
+                        </div>
                     )}
+                    <input type="file" onChange={handleImageUpload} />
                     <p className="text-center text-gray-400 mt-4">An image for your Avatar</p>
                     <input
                         className="w-full text-lg bg-gray-50 rounded-md px-4 py-2 mt-10 mb-2" 
@@ -90,19 +83,19 @@ const Home: React.FC = () => {
                         name="nftname"
                         type="text"
                         placeholder="Enter Subject"
-                        value={promt}
-                        onChange={(e) => setPrompt(e.target.value)}
+                        value={nftName}
+                        onChange={(e) => setNftName(e.target.value)}
                     />
                     <small
                         className="tracking-[0.2px] text-left w-full font-medium leading-6 text-base text-[#828282]"
                     >
-                        What is your prompt
+                        What is your Avatar's name
                     </small>
                 <button
                     onClick={handleNextButtonClick} 
                     className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] w-full text-black mt-10"
                 >
-                    upload
+                    Next
                 </button>
                 </div>
             </div>

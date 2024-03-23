@@ -7,9 +7,9 @@ import { createStepAtom } from "@/state/state"
 export const Navigation = () => {
 
     return (
-        <div>
+        <div className="mb-10 flex justify-end p-5">
 
-            <div className="flex space-x-4">
+            {/* <div className="flex space-x-4">
                 <LinkButton
                     destination="/create1"
                     name="+ Create Avatar"
@@ -18,30 +18,33 @@ export const Navigation = () => {
                     destination="/create2"
                     name="+ Create Avatar"
                 />
-            </div>
+            </div> */}
             <WallectConnectButton/>
         </div>
     )
 }
 
-export const Container = () => {
+export const Container = (props: any) => {
     return (
         <div className="w-full h-full flex flex-col justify-center items-center">
             <Aside/>
+            <div>
+                {props}
+            </div>
         </div>
     )
 }
 
 export const Aside = () => {
     return (
-        <div className="w-[400px] h-full flex flex-col justify-center items-center px-10">
+        <div className="w-[300px] h-full flex flex-col items-end">
             <h2
-                className="font-bold text-[32px] text-white mb-10 px-10"
+                className="w-full font-bold text-[36px] text-right text-white mb-10 pl-10"
             >
                 Create Your Own Avatar
             </h2>
             <div
-                className="px-10"
+                className="pl-10"
             >
 
             <AILinkButton
