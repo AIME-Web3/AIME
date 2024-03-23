@@ -13,17 +13,6 @@ const App: React.FC = () => {
     return (
         <div className="min-h-screen bg-dark text-white flex flex-col justify-center items-center">
             <header className="absolute top-0 left-0 w-full flex justify-between items-center p-5">
-                <div className="flex items-center">
-                    <i className="fas fa-broadcast-tower text-accent text-3xl"></i>
-                    <span className="ml-2 text-xl font-semibold">AIME</span>
-                </div>
-                <nav>
-                    <ul className="flex space-x-4">
-                        <button className="bg-blue-500 hover:bg-blue-700" onClick={StartClick}>Create Avatar </button>
-                        <li><a href="#" className="hover:text-accent">Docs</a></li>
-                        <li><button className="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-md hover:bg-accent-dark hover:text-white transition duration-300">Connect</button></li>
-                    </ul>
-                </nav>
             </header>
             <main className="flex flex-col items-center">
                 <h1 className="text-4xl font-bold mb-8">Your Own Virtual AI Reporter</h1>
