@@ -11,6 +11,7 @@ const Home: React.FC = () => {
     const [image, setImage] = useState<string | ArrayBuffer | null>(null); 
     const [nftName, setNftName] = useState("your own nft");
     const [promt, setPrompt] = useState("a girl with Batman body");
+    const [isLoading, setIsLoading] = useState(false);
     const { isConnected } = useAccount();
     const [generatedImage, setGeneratedImage] =useState<any>("jpg.jpeg");
 
@@ -39,19 +40,19 @@ const Home: React.FC = () => {
             reader.readAsDataURL(tempfile);
             
         }
-        };
+    };
     const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const tempfile = event.target.files && event.target.files[0];
-        // await handleGetImage(prompt, tempfile)
-        //     .then((result: File) => {
-        //         console.log(result);
-        //         setGeneratedImage(URL.createObjectURL(result));
-        //     })
-        await BackendAPI.avatarWithPrompt({ prompt: 'a girl with Batman body', file: tempfile })
+        setIsLoading(true);
+        await BackendAPI.avatarWithPrompt({ prompt: promt, file: tempfile })
         .then((result: File) => {
-          console.log(result);
-          setGeneratedImage(URL.createObjectURL(result));
-        })
+            console.log("fucl")
+            console.log("result", result);
+            setImage(URL.createObjectURL(result));
+            setGeneratedImage(URL.createObjectURL(result));
+        }).finally(() => {
+            setIsLoading(false);
+        });
     }
 
     const handleNextButtonClick = async () => {
@@ -62,25 +63,32 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <div className={`flex w-4/5 margin-auto justify-around min-h-screen bg-dark ${!isConnected && 'hidden'}`}>
+            <div className={`flex w-4/5 margin-auto justify-around min-h-screen bg-dark`}>
                 <Aside/>
                 <div className="px-10 rounded-lg w-[600px] flex flex-col items-center flex-wrap text-black">
                     
                     {image && (
-                        <div className="flex items-center justify-center w-[400px] h-[400px] bg-black rounded-lg">
-                            <img src={generatedImage} alt="Uploaded" className="max-w-full max-h-full" />
+                        <div className=" bg-black rounded-lg">
+                            
+                                <img src={generatedImage} alt="Uploaded" className="max-w-full max-h-full rounded-[40px]" />
+                            
                         </div>
                     )}
                     {!image && (
                         <>
                         <label htmlFor={`image`} className="flex items-center justify-center w-64 h-64 bg-gray-700 rounded-lg">
-                            <i className="fas fa-image fa-3x text-gray-500"></i>
-                            <input
-                                id="image"
-                                type="file"
-                                className='w-0'
-                                onChange={handleUpload}
-                            />
+                        {isLoading ?
+                                <div className="animate-spin h-5 w-5 border-t-2 border-b-2 border-gray-500 mx-auto my-4"></div> :
+                            <>
+                                <i className="fas fa-image fa-3x text-gray-500"></i>
+                                <input
+                                    id="image"
+                                    type="file"
+                                    className='w-0'
+                                    onChange={(e) => handleUpload(e)}
+                                />
+                            </>
+                        }
                         </label>
                         </>
                     )}
@@ -119,9 +127,9 @@ const Home: React.FC = () => {
                     )}
                 <button
                     onClick={!image? handleNextButtonClick: ()=>{}} 
-                    className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] w-full text-black mt-10"
+                    className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] font-bold w-full text-black mt-10"
                 >
-                    {!image ? "upload" : "issue nft"}
+                    {!image ? "Upload" : "Issue Nft"}
                 </button>
                 </div>
             </div>

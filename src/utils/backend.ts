@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import { request } from "./request"
 
 const backendReq = (payload: any) => {
-  const baseUrl = 'https://avatardemo.onrender.com/docs'
+  const baseUrl = 'https://avatardemo.onrender.com'
   return request({
     ...payload,
     baseUrl,

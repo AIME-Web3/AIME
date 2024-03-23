@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { insertRow, upload } from "@/utils/firebaseHelper";
 import { Aside, AsideVideo } from '@/components/components';
-import { BackendAPI, handleGetImage } from '@/utils/backend';
+import { BackendAPI } from '@/utils/backend';
 import { useAccount } from 'wagmi';
 
 const Home: React.FC = () => {
@@ -42,11 +42,7 @@ const Home: React.FC = () => {
         };
     const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const tempfile = event.target.files && event.target.files[0];
-        await handleGetImage(prompt, tempfile)
-            .then((result: File) => {
-                console.log(result);
-                setGeneratedImage(URL.createObjectURL(result));
-            })
+        
     }
 
     const handleNextButtonClick = async () => {
@@ -57,7 +53,7 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <div className={`flex w-4/5 margin-auto justify-around min-h-screen bg-dark ${!isConnected && 'hidden'}`}>
+            <div className={`flex w-4/5 margin-auto justify-around min-h-screen bg-dark`}>
                 <AsideVideo/>
                 <div className="px-10 rounded-lg w-[600px] flex flex-col items-center flex-wrap text-black">
                     
@@ -79,7 +75,7 @@ const Home: React.FC = () => {
                         </label>
                         </>
                     )}
-                    {!image &&(
+                    {image &&(
                         <>
                             <p className="text-center text-gray-400 mt-4">An image for your Avatar</p>
                             <input
@@ -116,8 +112,22 @@ const Home: React.FC = () => {
                     onClick={!image? handleNextButtonClick: ()=>{}} 
                     className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] w-full text-black mt-10"
                 >
-                    {!image ? "upload" : "issue nft"}
+                    {!image ? "Connect Wallet" : "issue nft"}
                 </button>
+                <div className="flex w-full">
+                    <button
+                        onClick={!image? handleNextButtonClick: ()=>{}} 
+                        className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] w-full text-black mt-10"
+                    >
+                        Back
+                    </button>
+                    <button
+                        onClick={!image? handleNextButtonClick: ()=>{}} 
+                        className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] w-full text-black mt-10"
+                    >
+                        Connect Wallet
+                    </button>
+                </div>
                 </div>
             </div>
         </>
