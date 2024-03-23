@@ -9,16 +9,24 @@ export const Navigation = () => {
     return (
         <div className="mb-10 flex justify-end p-5">
 
-            {/* <div className="flex space-x-4">
+            <div className="flex space-x-4 items-center mr-4">
                 <LinkButton
                     destination="/create1"
                     name="+ Create Avatar"
                 />
                 <LinkButton
-                    destination="/create2"
-                    name="+ Create Avatar"
+                    destination="/report_video"
+                    name="AI Report"
                 />
-            </div> */}
+                <LinkButton
+                    destination="/docs"
+                    name="Docs"
+                />
+                <LinkButton
+                    destination="/market_place"
+                    name="Marketplace"
+                />
+            </div>
             <WallectConnectButton/>
         </div>
     )
@@ -61,6 +69,38 @@ export const Aside = () => {
                 index={3}
                 name="MINT YOUR OWN"
                 destination="/create3"
+                />
+            </div>
+        </div>
+    )
+}
+
+export const AsideVideo = () => {
+    return (
+        <div className="w-[400px] h-full flex flex-col items-center">
+            <h2
+                className="w-full font-bold text-[36px] text-left text-white mb-10 pl-10 whitespace-pre-wrap"
+            >
+                {"Your Own\n Virtual AI Reporter"}
+            </h2>
+            <div
+                className="pl-10"
+            >
+
+            <AILinkButton
+                index={1}
+                name="CONNECT WALLET"
+                destination="/report_video"
+                />
+            <AILinkButton
+                index={2}
+                name="ENTER TRANSCRIPTS"
+                destination="/report_video"
+                />
+            <AILinkButton
+                index={3}
+                name="PERFORM"
+                destination="/report_video"
                 />
             </div>
         </div>

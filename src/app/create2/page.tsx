@@ -1,52 +1,42 @@
 "use client"
-import React from 'react';
-import { useState, } from 'react';
-// import { mintclub } from 'mint.club-v2-sdk';
+import React, { useCallback } from 'react';
+// import { writeContract } from 'wagmi/actions';
+import { useAccount, useWriteContract } from 'wagmi';
+import * as AimeErc7007Abi from '../../asset/aime-erc7007.abi.json';
+const MintERC7007Button: React.FC = (props: any) => {
+  const { isConnected, address } = useAccount();
+  const { data: hash, writeContract } = useWriteContract() 
+  const metadataUri = 'https://www.miladymaker.net/milady/json/2';
+    // mint(
+    //     bytes calldata prompt,
+    //         bytes calldata aigcData,
+    //         string calldata uri,
+    //         bytes calldata proof
+    // )
+    const mintAime = useCallback(async (uri: string) => {
+        if(!isConnected) {
+            alert('Please connect your wallet');
+            return;
+        }
+        await writeContract({
+            address: '0xCE16905BdD7fF8fBEA3695edaC80e1D48E2bE75f',
+            abi: AimeErc7007Abi,
+            functionName: 'mint',
+            args: ['0x00', '0x00', uri, '0x00'],
+        });
+    }, [writeContract]);
 
-const MintNFTButton: React.FC = () => {
-  // const [isLoading, setIsLoading] = useState(false);
-
-  // const handleMintNFT = async () => {
-  //   setIsLoading(true);
-
-  //   try {
-  //     const MortyMee6Nft = mintclub
-  //       .network('sepolia')
-  //       .nft('MnM-NFT');
-
-  //     await MortyMee6Nft.create({
-  //       name: 'Morty and Mee6',
-  //       reserveToken: {
-  //         address: '0x4200000000000000000000000000000000000006',
-  //         decimals: 18,
-  //       },
-  //       curveData: {
-  //         curveType: 'EXPONENTIAL',
-  //         stepCount: 10,
-  //         maxSupply: 10_000,
-  //         initialMintingPrice: 0.01,
-  //         finalMintingPrice: 0.1,
-  //         creatorAllocation: 100,
-  //       },
-  //       metadataUrl: 'ipfs://...',
-  //     });
-
-  //     console.log('NFT created successfully!');
-  //   } catch (error) {
-  //     console.error('Error creating NFT:', error);
-  //   }
-
-  //   setIsLoading(false);
-  // };
-
-  return (
-    <>
-    <p>Hello</p>
-    </>
-    // <button onClick={handleMintNFT} disabled={isLoading}>
-    //   {isLoading ? 'Minting NFT...' : 'Mint NFT'}
-    // </button>
-  );
+    return (
+        <>
+        <button 
+            className='bg-blue-500 hover:bg-blue-700 px-8 py-3 rounded-md hover:bg-accent-dark hover:text-white transition duration-300'
+            onClick={() => mintAime(metadataUri)}
+        >
+            Mint Aime
+        </button>
+        <p>Hash: {hash ? hash : '(no hash)'}</p>
+        </>
+    );
 };
 
-export default MintNFTButton;
+export default MintERC7007Button;

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { insertRow, upload } from "@/utils/firebaseHelper";
-import { Aside } from '@/components/components';
+import { Aside, AsideVideo } from '@/components/components';
 import { BackendAPI, handleGetImage } from '@/utils/backend';
 import { useAccount } from 'wagmi';
 
@@ -42,16 +42,11 @@ const Home: React.FC = () => {
         };
     const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const tempfile = event.target.files && event.target.files[0];
-        // await handleGetImage(prompt, tempfile)
-        //     .then((result: File) => {
-        //         console.log(result);
-        //         setGeneratedImage(URL.createObjectURL(result));
-        //     })
-        await BackendAPI.avatarWithPrompt({ prompt: 'a girl with Batman body', file: tempfile })
-        .then((result: File) => {
-          console.log(result);
-          setGeneratedImage(URL.createObjectURL(result));
-        })
+        await handleGetImage(prompt, tempfile)
+            .then((result: File) => {
+                console.log(result);
+                setGeneratedImage(URL.createObjectURL(result));
+            })
     }
 
     const handleNextButtonClick = async () => {
@@ -63,7 +58,7 @@ const Home: React.FC = () => {
     return (
         <>
             <div className={`flex w-4/5 margin-auto justify-around min-h-screen bg-dark ${!isConnected && 'hidden'}`}>
-                <Aside/>
+                <AsideVideo/>
                 <div className="px-10 rounded-lg w-[600px] flex flex-col items-center flex-wrap text-black">
                     
                     {image && (
