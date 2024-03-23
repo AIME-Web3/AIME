@@ -13,6 +13,7 @@ import { RecoilRoot } from "recoil";
 import "./globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
 import { Navigation } from "@/components/components";
+import BgImage from "../asset/bg.png";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={{
+        backgroundImage: `url(${BgImage.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+      }}>
         <RecoilRoot>
           <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
