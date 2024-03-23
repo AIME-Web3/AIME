@@ -12,7 +12,18 @@ const Home: React.FC = () => {
         const tempfile = event.target.files && event.target.files[0];
         if (tempfile) {
             // below test must be address, it is the name of the file
+            // upload file to firebase
             const url_1 = await upload(`test`, tempfile);
+            
+            // key will be address
+            var key = "aaa"
+            // upload file to firebase
+            await insertRow('NFT', [key], {
+                id: key,
+                address: key || '',
+                sourceUrl: url_1,
+                description: `${key}-Avatar_image`,
+              })
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.result) {
