@@ -94,7 +94,7 @@ const Home: React.FC = () => {
                             <small
                                 className="tracking-[0.2px] text-left w-full font-medium leading-6 text-base text-[#828282]"
                             >
-                                What is your Avatar's name
+                                What is your Avatar&apos;s name
                             </small>
                             <input
                                 className="w-full text-lg bg-gray-50 rounded-md px-4 py-2 mt-10 mb-2" 

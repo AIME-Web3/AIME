@@ -4,16 +4,20 @@ import { Inter } from "next/font/google";
 import dynamic from "next/dynamic";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from "react";
-import { WagmiProvider, useAccount } from 'wagmi';
-import { config } from "../components/wallet_connect/config";
-import { ConnectButton, RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
 import { LinkButton, WallectConnectButton } from "../components/wallet_connect/button";
 import { RecoilRoot } from "recoil";
 
 import "./globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
-import { Navigation } from "@/components/components";
+import { Navigation } from "../components/components";
 import BgImage from "../asset/bg.png";
+import { publicProvider } from 'wagmi/providers/public';
+import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+
+import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
+import { chains, wagmiConfig } from "../utils/wagmi";
+
+const rainbowkitTheme = darkTheme();
 
 const queryClient = new QueryClient();
 
@@ -33,14 +37,18 @@ export default function RootLayout({
         backgroundPosition: 'center center',
       }}>
         <RecoilRoot>
-          <WagmiProvider config={config}>
-            <QueryClientProvider client={queryClient}>
-              <RainbowKitProvider theme={darkTheme()}>
+        <QueryClientProvider client={queryClient}>
+        <WagmiConfig config={wagmiConfig}>
+          <RainbowKitProvider
+            chains={chains}
+            theme={rainbowkitTheme}
+            modalSize="compact"
+          >
                 <Navigation/>
                 {children}
-              </RainbowKitProvider>
-            </QueryClientProvider>
-          </WagmiProvider>
+                </RainbowKitProvider>
+        </WagmiConfig>
+      </QueryClientProvider>
         </RecoilRoot>
       </body>
     </html>

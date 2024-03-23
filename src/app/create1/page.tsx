@@ -1,9 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { insertRow, upload } from "@/utils/firebaseHelper";
-import { Aside } from '@/components/components';
-import { BackendAPI, handleGetImage } from '@/utils/backend';
+import { insertRow, upload } from "../../utils/firebaseHelper";
+import { Aside } from '../../components/components';
+import { BackendAPI } from '../../utils/backend';
 import { useAccount } from 'wagmi';
 
 const Home: React.FC = () => {

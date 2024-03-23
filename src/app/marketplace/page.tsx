@@ -2,9 +2,11 @@
 import { title } from 'process';
 import React, { useCallback } from 'react';
 import { useState, } from 'react';
-import { useAccount, useWalletClient, useWriteContract } from 'wagmi';
-import * as AimeErc7007Abi from '../mint/aime-erc7007.abi.json';
+import { useAccount, useConfig, useContractWrite } from 'wagmi';
+import AimeErc7007Abi from '../mint/aime-erc7007.abi.json';
 // import { writeContract } from 'viem/actions'
+import { writeContract } from '@wagmi/core';
+import { wagmiConfig } from '../../utils/wagmi';
 
 const NavBtnStyleNonActive = `m-2 bg-transparent text-white py-2 px-4 border border-green-600 rounded-full hover:bg-gradient-to-r hover:from-green-600 hover:via-green-600 hover:to-green-800 hover:text-white `;
 const NavBtnStyleActive = `m-2 bg-gradient-to-r from-green-400 via-green-500 to-green-600 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-150 rounded-full hover:bg-green-600 hover:text-white `;
@@ -75,29 +77,38 @@ const metadataUri = 'https://www.miladymaker.net/milady/json/2';
 
 
 const MarketPlace: React.FC = () => {
-  const { isConnected, address, chainId } = useAccount();
-  const result = useWalletClient()
-
-  const { data: hash, writeContract } = useWriteContract()
+  const { isConnected, address, } = useAccount();
+  // const result = useWalletClient()
+  const config = useConfig();
+  const {
+    writeAsync,
+  } = useContractWrite({
+    address: '0xCE16905BdD7fF8fBEA3695edaC80e1D48E2bE75f',
+    abi: AimeErc7007Abi,
+    functionName: 'mint',
+  })
   const mintAime = useCallback(async (uri: string) => {
     console.log({
       address,
       isConnected,
-      chainId,
-      result,
     })
     if(!isConnected) {
       alert('Please connect your wallet');
       return;
     }
-    writeContract({
-      address: '0xCE16905BdD7fF8fBEA3695edaC80e1D48E2bE75f',
-      abi: AimeErc7007Abi,
-      functionName: 'mint',
+    console.log({
+      config,
+      AimeErc7007Abi
+    })
+
+    const { hash } = await writeAsync({
       args: ['0x00', '0x00', uri, '0x00'],
+    });
+    console.log({
+      hash
     })
     // await writeContract();
-  }, [result, address, chainId, isConnected, writeContract]);
+  }, [address, config, isConnected, writeAsync]);
 
   return (
     <>

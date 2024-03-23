@@ -2,7 +2,7 @@
 import React, { useCallback } from 'react';
 // import { writeContract } from 'wagmi/actions';
 import { useAccount, useWriteContract } from 'wagmi';
-import * as AimeErc7007Abi from './aime-erc7007.abi.json';
+import AimeErc7007Abi from './aime-erc7007.abi.json';
 const MintERC7007Button: React.FC = (props: any) => {
   const { isConnected, address } = useAccount();
   const { data: hash, writeContract } = useWriteContract() 
