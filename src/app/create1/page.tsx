@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { insertRow, upload } from "../../utils/firebaseHelper";
 import { Aside } from '../../components/components';
-import { BackendAPI } from '../../utils/backend';
+import { BackendAPI, handleOra } from '../../utils/backend';
 import { useAccount } from 'wagmi';
 
 const Home: React.FC = () => {
@@ -12,18 +12,15 @@ const Home: React.FC = () => {
     const [nftName, setNftName] = useState("your own nft");
     const [promt, setPrompt] = useState("a girl with Batman body");
     const [isLoading, setIsLoading] = useState(false);
-    const { isConnected } = useAccount();
+    const { address, isConnected } = useAccount();
     const [generatedImage, setGeneratedImage] =useState<any>("jpg.jpeg");
 
-    const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const tempfile = event.target.files && event.target.files[0];
+    const handleImageUpload = async (tempfile: any) => {
         if (tempfile) {
             // below test must be address, it is the name of the file
             // upload file to firebase
-            const url_1 = await upload(`test`, tempfile);
-
-            // key will be address
-            var key = "aaa"
+            const key = `${address}-${+new Date()}`;
+            const url_1 = await upload(`${key}`, tempfile);
             // upload file to firebase
             await insertRow('NFT', [key], {
                 id: key,
@@ -43,6 +40,7 @@ const Home: React.FC = () => {
     };
     const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const tempfile = event.target.files && event.target.files[0];
+        handleImageUpload(tempfile);
         setIsLoading(true);
         await BackendAPI.avatarWithPrompt({ prompt: promt, file: tempfile })
         .then((result: File) => {
@@ -56,9 +54,9 @@ const Home: React.FC = () => {
     }
 
     const handleNextButtonClick = async () => {
-        
-        // router.push('/create2');
-        
+        handleOra().then(() => {
+            alert("orararara")
+        })
     };
 
     return (
@@ -126,7 +124,7 @@ const Home: React.FC = () => {
                         </>
                     )}
                 <button
-                    onClick={!image? handleNextButtonClick: ()=>{}} 
+                    onClick={!image? () => {} : handleNextButtonClick} 
                     className="rounded-md px-6 py-2 flex gap-2 justify-center items-center self-stretch relative bg-[#64f2a9] font-bold w-full text-black mt-10"
                 >
                     {!image ? "Upload" : "Issue Nft"}

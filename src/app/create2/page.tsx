@@ -5,7 +5,7 @@ import { useAccount, useWriteContract } from 'wagmi';
 import * as AimeErc7007Abi from '../../asset/aime-erc7007.abi.json';
 const MintERC7007Button: React.FC = (props: any) => {
   const { isConnected, address } = useAccount();
-  const { data: hash, writeContract } = useWriteContract() 
+  const { data: hash, writeContract } = useWriteContract();
   const metadataUri = 'https://www.miladymaker.net/milady/json/2';
     // mint(
     //     bytes calldata prompt,

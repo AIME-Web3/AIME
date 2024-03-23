@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
 import { request } from "./request"
 
 const backendReq = (payload: any) => {
@@ -19,6 +19,15 @@ const handleVideo = (res: AxiosResponse) => {
   const file = new File([blob], 'uploaded_image.mp4', { type: (res?.headers?.['Content-Type'] as string)?.toLowerCase() || 'video/mp4' });
 
   return file
+}
+
+export const handleOra = async () => {
+  const oraUrl = "https://ezkpoll-backend.onrender.com/ora/ora";
+  const {data: response} = await axios.post(oraUrl, {
+    prompt: "test",
+  });
+  return request;
+
 }
 
 const handleImage = (response: AxiosResponse) => {

@@ -23,7 +23,7 @@ export const Navigation = () => {
                     name="Docs"
                 />
                 <LinkButton
-                    destination="/market_place"
+                    destination="/marketplace"
                     name="Marketplace"
                 />
             </div>
