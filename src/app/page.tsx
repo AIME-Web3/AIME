@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -6,7 +7,7 @@ const App: React.FC = () => {
 
     const router = useRouter();
     const StartClick = () => {
-        router.push('/create');
+        router.push('/create1');
     };
 
     return (
@@ -18,7 +19,7 @@ const App: React.FC = () => {
                 </div>
                 <nav>
                     <ul className="flex space-x-4">
-                        <button className="bg-blue-500 hover:bg-blue-700" onClick={StartClick}>+ Create Avatar </button>
+                        <button className="bg-blue-500 hover:bg-blue-700" onClick={StartClick}>Create Avatar </button>
                         <li><a href="#" className="hover:text-accent">Docs</a></li>
                         <li><button className="bg-blue-500 hover:bg-blue-700 px-4 py-2 rounded-md hover:bg-accent-dark hover:text-white transition duration-300">Connect</button></li>
                     </ul>

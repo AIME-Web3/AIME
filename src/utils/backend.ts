@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import { request } from "./request"
 
 const backendReq = (payload: any) => {
-  const baseUrl = 'http://172.21.10.105:8000/docs'
+  const baseUrl = 'http://172.21.10.105:7760/docs'
   return request({
     ...payload,
     baseUrl,
@@ -50,13 +50,13 @@ export const BackendAPI = {
     responseType: 'arraybuffer'
   }).then(handleImage),
   avatarWithPrompt: ({prompt, file}: any) => backendReq({
-    data: {file},
+    data: {prompt, file},
     method: "POST",
-    endpoint: `generate_your_avatar_images/?image_prompt=${prompt}`,
+    endpoint: `generate_avatar_images`,
     contentType: 'multipart/form-data',
     responseType: 'arraybuffer'
   }).then(handleImage),
-  generateAudio: ({content, gender = "1"}: any) => backendReq({
+  generateAudio: ({content, gender}: any) => backendReq({
     data: {content, gender},
     method: "POST",
     endpoint: `generate_audio`,
