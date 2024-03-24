@@ -5,6 +5,8 @@ import { insertRow, upload } from "@/utils/firebaseHelper";
 import { Aside, AsideVideo } from '@/components/components';
 import { BackendAPI } from '@/utils/backend';
 import { useAccount } from 'wagmi';
+import { globalImageAtom } from '@/state/state';
+import { useRecoilState } from 'recoil';
 
 const Home: React.FC = () => {
     const router = useRouter();
@@ -16,7 +18,7 @@ const Home: React.FC = () => {
     const [audio, setAudio] = useState<any>(null);
     const [video, setVideo] = useState<any>(null);
 
-    const [generatedImage, setGeneratedImage] =useState<any>("jpg.jpeg");
+    const [generatedImage, setGeneratedImage] =useRecoilState(globalImageAtom);
 
     const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const tempfile = event.target.files && event.target.files[0];

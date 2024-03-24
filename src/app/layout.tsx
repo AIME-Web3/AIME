@@ -14,6 +14,7 @@ import BgImage from "../asset/bg.png";
 import { publicProvider } from 'wagmi/providers/public';
 import { darkTheme, getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 
+
 import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
 import { chains, wagmiConfig } from "../utils/wagmi";
 

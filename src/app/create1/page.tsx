@@ -5,6 +5,9 @@ import { Aside } from '../../components/components';
 import { BackendAPI, handleOra } from '../../utils/backend';
 import { useAccount, useConfig, useContractWrite } from 'wagmi';
 import AimeErc7007Abi from '../mint/aime-erc7007.abi.json';
+import { setGlobal } from 'next/dist/trace';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { globalImageAtom } from "../../state/state"
 
 const Home: React.FC = () => {
     const config = useConfig();
@@ -13,8 +16,9 @@ const Home: React.FC = () => {
     const [nftName, setNftName] = useState("your own nft");
     const [promt, setPrompt] = useState("a girl with Batman body");
     const [isLoading, setIsLoading] = useState(false);
+    const setGlobalImage = useSetRecoilState(globalImageAtom);
     const { address, isConnected } = useAccount();
-    const [generatedImage, setGeneratedImage] =useState<any>("jpg.jpeg");
+    const [generatedImage, setGeneratedImage] =useRecoilState<any>(globalImageAtom);
 
     const {
         writeAsync,
@@ -79,6 +83,7 @@ const Home: React.FC = () => {
             console.log("fucl")
             console.log("result", result);
             setImage(URL.createObjectURL(result));
+            setGlobalImage(URL.createObjectURL(result));
             setGeneratedImage(URL.createObjectURL(result));
         }).finally(() => {
             setIsLoading(false);
