@@ -1,11 +1,18 @@
 "use client"
 import React, { useCallback } from 'react';
 // import { writeContract } from 'wagmi/actions';
-import { useAccount, useWriteContract } from 'wagmi';
-import * as AimeErc7007Abi from '../../asset/aime-erc7007.abi.json';
+import { useAccount, useContractWrite } from 'wagmi';
+import AimeErc7007Abi from '../mint/aime-erc7007.abi.json';
 const MintERC7007Button: React.FC = (props: any) => {
   const { isConnected, address } = useAccount();
-  const { data: hash, writeContract } = useWriteContract();
+//   const { data: hash, writeContract } = useWriteContract();
+  const {
+        writeAsync, data
+  } = useContractWrite({
+    address: '0xCE16905BdD7fF8fBEA3695edaC80e1D48E2bE75f',
+    abi: AimeErc7007Abi,
+    functionName: 'mint',
+  })
   const metadataUri = 'https://www.miladymaker.net/milady/json/2';
     // mint(
     //     bytes calldata prompt,
@@ -18,13 +25,10 @@ const MintERC7007Button: React.FC = (props: any) => {
             alert('Please connect your wallet');
             return;
         }
-        await writeContract({
-            address: '0xCE16905BdD7fF8fBEA3695edaC80e1D48E2bE75f',
-            abi: AimeErc7007Abi,
-            functionName: 'mint',
+        await writeAsync({
             args: ['0x00', '0x00', uri, '0x00'],
         });
-    }, [writeContract]);
+    }, [isConnected, writeAsync]);
 
     return (
         <>
@@ -34,7 +38,7 @@ const MintERC7007Button: React.FC = (props: any) => {
         >
             Mint Aime
         </button>
-        <p>Hash: {hash ? hash : '(no hash)'}</p>
+        <p>Hash: {data ? data.hash : '(no hash)'}</p>
         </>
     );
 };

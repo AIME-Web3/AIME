@@ -6,7 +6,7 @@ export function WalletOptions() {
 
   return connectors.map((connector) => (
     <WalletOption
-      key={connector.uid}
+      key={connector.id}
       connector={connector}
       onClick={() => connect({ connector })}
     />

@@ -122,13 +122,13 @@ const Home: React.FC = () => {
                             </button>
                             <button
                                 className="rounded-md px-6 py-2 flex gap-2 font-bold justify-center items-center self-stretch relative bg-[#64f2a9] w-1/2 text-black mt-10"
-                                onClick={(e) =>handleUpload(e)} 
+                                onClick={(e) =>handleUpload(e as unknown as any)} 
                             >
                                 Download
                             </button>
                             <button
                                 className="rounded-md px-6 py-2 flex gap-2 font-bold justify-center items-center self-stretch relative bg-[#64f2a9] w-1/2 text-black mt-10"
-                                onClick={(e) =>handleUpload(e)} 
+                                onClick={(e) =>handleUpload(e as unknown as any)} 
                             >
                                 Share
                             </button>
@@ -153,7 +153,7 @@ const Home: React.FC = () => {
                                 </button>
                                 <button
                                     className="rounded-md px-6 py-2 flex gap-2 font-bold justify-center items-center self-stretch relative bg-[#64f2a9] w-1/2 text-black mt-10"
-                                    onClick={(e) =>handleUpload(e)} 
+                                    onClick={(e) =>handleUpload(e as unknown as any)} 
                                 >
                                     Generate
                                 </button>
