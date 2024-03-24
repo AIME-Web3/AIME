@@ -1,12 +1,14 @@
 "use client"
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { useAccount } from 'wagmi';
 
 
 const App: React.FC = () => {
-
+    const { isConnected } = useAccount();
     const router = useRouter();
     const StartClick = () => {
+        console.log('StartClick');
         router.push('/create1');
     };
 
@@ -26,7 +28,7 @@ const App: React.FC = () => {
                 </div>
                 <div className="flex flex-col items-center">
                     <p className="mb-4">Connect wallet to check NFT</p>
-                    <button className="bg-blue-500 hover:bg-blue-700 px-8 py-3 rounded-md hover:bg-accent-dark hover:text-white transition duration-300">Connect Wallet</button>
+                    <button onClick={() => StartClick()} className="bg-blue-500 hover:bg-blue-700 px-8 py-3 rounded-md hover:bg-accent-dark hover:text-white transition duration-300">{isConnected ? 'GO' : 'Connect Wallet'}</button>
                 </div>
             </main>
         </div>
